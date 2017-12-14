@@ -19,6 +19,6 @@ public class Light {
 
     public static void main(String[] args) {
         Light it=new Light();
-        it.On() ;  
+        it.On() ;
     }
 }
