@@ -1,9 +1,16 @@
-package com.test1;
+package com.test5;
 
-import java.util.Arrays;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 //List
-class MyList<E> {
+class MyList<E> implements List<E> {
     private int size;// The size of the ArrayList
     private Object elements[];
 
@@ -15,12 +22,25 @@ class MyList<E> {
         return size;
     }
 
+    @Contract(pure = true)
     public boolean isEmpty() {// judge if the list is empty
         return size == 0;
     }
 
+    @Contract(pure = true)
     public boolean contains(Object o) {// judge if we can find the element
         return indexOf(o) >= 0;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<E> iterator() {
+        return null;
+    }
+
+    @Override
+    public void forEach(Consumer<? super E> action) {
+
     }
 
     public boolean add(E e) {// judge if add an element
@@ -29,7 +49,7 @@ class MyList<E> {
     }
 
     public boolean remove(Object o) {// remove the first element of the
-                                     // occurrence of the list
+        // occurrence of the list
         if (o == null) {
             for (int i = 0; i < size; i++) {
                 if (elements[i] == null) {
@@ -52,13 +72,54 @@ class MyList<E> {
         return false;
     }
 
-    void clear() {// remove all of the elements from list
+    @Override
+    public boolean containsAll(@NotNull Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(@NotNull Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, @NotNull Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(@NotNull Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(@NotNull Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void replaceAll(UnaryOperator<E> operator) {
+
+    }
+
+    @Override
+    public void sort(Comparator<? super E> c) {
+
+    }
+
+    public void clear() {// remove all of the elements from list
         for (int i = 0; i < size; i++) {
             elements[i] = null;
         }
         size = 0;
     }
 
+    @Contract(pure = true)
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -72,8 +133,14 @@ class MyList<E> {
     }
 
     public Object[] toArray() {// Returns an array containing all of the
-                               // elements in this list
+        // elements in this list
         return Arrays.copyOf(elements, size);
+    }
+
+    @NotNull
+    @Override
+    public <T> T[] toArray(@NotNull T[] a) {
+        return null;
     }
 
     @Override
@@ -84,9 +151,11 @@ class MyList<E> {
         return result;
     }
 
+    @NotNull
+    @Contract(pure = true)
     private String outOfRange(int index)// Constructs an
-                                        // IndexOutOfBoundsException detail
-                                        // message
+    // IndexOutOfBoundsException detail
+    // message
     {
         return "index:" + index + ",size:" + size;
     }
@@ -98,6 +167,8 @@ class MyList<E> {
 
     }
 
+    @Contract(pure = true)
+    @Override
     public E get(int index) {// Returns the element in this list.
         rangeCheck(index);
         return (E) elements[index];
@@ -127,8 +198,8 @@ class MyList<E> {
         return oldVal;
     }
 
-    int indexOf(Object o) {// Returns the index of the first occurrence of the
-                           // element
+    public int indexOf(Object o) {// Returns the index of the first occurrence of the
+        // element
         if (o == null) {
             for (int i = 0; i < size; i++) {
                 if (elements[i] == null) {
@@ -146,8 +217,8 @@ class MyList<E> {
         return -1;
     }
 
-    int lastIndexOf(Object o) {// Returns the index of the last occurrence of
-                               // the element
+    public int lastIndexOf(Object o) {// Returns the index of the last occurrence of
+        // the element
         if (o == null) {
             for (int i = size - 1; i >= 0; i--) {
                 if (elements[i] == null) {
@@ -163,6 +234,39 @@ class MyList<E> {
 
         }
         return -1;
+    }
+
+    @NotNull
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
+    public Spliterator<E> spliterator() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> stream() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> parallelStream() {
+        return null;
     }
 }
 
@@ -170,12 +274,12 @@ public class ListTest {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        MyList<Object> list = new MyList<Object>(6);
+        MyList<String> list = new MyList<String>(6);
         for (int i = 0; i < list.size(); i++) {
-            list.add(i,2*i+1);
+            list.add(i, "str");
         }
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+            System.out.println("the elements of the list is "+list.get(i));
         }
     }
 
