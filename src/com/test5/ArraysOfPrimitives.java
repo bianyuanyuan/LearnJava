@@ -41,6 +41,7 @@ public class ArraysOfPrimitives {
                 3,
         };//
         Integer[] arr2 = new Integer[]{
+
                 new Integer(1),
                 new Integer(2),
                 3,
@@ -61,7 +62,7 @@ public class ArraysOfPrimitives {
         for (int i = 0; i < ps.length; i++) {
             ps[i] = new PrintString("hello");
         }
-        System.out.print(Arrays.toString(ps));
+        //System.out.print(Arrays.toString(ps));
 
     }
 }
