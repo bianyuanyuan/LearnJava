@@ -1,0 +1,52 @@
+package com.org.thread;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+//show the use of thread priorities
+public class SimplePriorities implements Runnable {
+    private int countDown = 5;
+    private volatile double d;//no optimization
+    private int priority;
+
+    public SimplePriorities(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return Thread.currentThread() + ":" + countDown;
+    }
+
+    public static void main(String[] args) {
+        ExecutorService exe = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            exe.execute(new SimplePriorities(Thread.MIN_PRIORITY));
+        }
+        exe.execute(new SimplePriorities(Thread.MAX_PRIORITY));
+        exe.shutdown();
+    }
+
+    @Override
+    public void run() {
+        Thread.currentThread().setPriority(priority);
+        while (true) {
+            for (int i = 1; i < 100000; i++) {
+                d += (Math.PI + Math.E) / (double) i;
+                if (i % 1000 == 0) {
+                    //Thread.yield();
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println(this);
+            if (--countDown == 0) {
+                return;
+            }
+        }
+    }
+}
